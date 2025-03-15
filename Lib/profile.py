@@ -181,6 +181,9 @@ class Profile:
     # Heavily optimized dispatch routine for time.process_time() timer
 
     def trace_dispatch(self, frame, event, arg):
+        if event not in self.dispatch:
+            return
+
         timer = self.timer
         t = timer()
         t = t[0] + t[1] - self.t - self.bias
@@ -199,6 +202,9 @@ class Profile:
     # an integer but float works too -- and time.process_time() relies on that).
 
     def trace_dispatch_i(self, frame, event, arg):
+        if event not in self.dispatch:
+            return
+        
         timer = self.timer
         t = timer() - self.t - self.bias
 
@@ -214,6 +220,9 @@ class Profile:
     # 1/60th second)
 
     def trace_dispatch_mac(self, frame, event, arg):
+        if event not in self.dispatch:
+            return
+
         timer = self.timer
         t = timer()/60.0 - self.t - self.bias
 
@@ -228,6 +237,9 @@ class Profile:
     # SLOW generic dispatch routine for timer returning lists of numbers
 
     def trace_dispatch_l(self, frame, event, arg):
+        if event not in self.dispatch:
+            return
+
         get_time = self.get_time
         t = get_time() - self.t - self.bias
 
